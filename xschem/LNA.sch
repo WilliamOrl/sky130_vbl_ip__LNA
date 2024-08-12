@@ -149,7 +149,6 @@ N 430 -240 430 -220 {
 lab=iref}
 N 890 -600 890 -570 {
 lab=iref}
-C {/home/william/TCC/xschem/OTA.sym} 720 -340 0 0 {name=x1}
 C {sky130_fd_pr/pfet_g5v0d10v5.sym} 800 -750 1 0 {name=M1
 W=1
 L=0.5
@@ -236,3 +235,4 @@ C {devices/lab_pin.sym} 300 -240 0 0 {name=p7 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 420 -240 0 0 {name=p8 sig_type=std_logic lab=iref}
 C {devices/code_shown.sym} 130 -870 0 0 {name=s1 only_toplevel=false value=blabla}
 C {sky130_fd_pr/corner.sym} 470 -870 0 0 {name=CORNER only_toplevel=false corner=tt}
+C {/home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym} 720 -340 0 0 {name=x1}
