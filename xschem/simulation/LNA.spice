@@ -1,0 +1,110 @@
+** sch_path: /home/william/projects/sky130_vbl_ip__LNA/xschem/LNA.sch
+**.subckt LNA
+C5 Vout GND 1p m=1
+I0 IREF GND {iref}
+V0 VSS GND 0
+V1 VDD GND {vdd}
+E1 Vp net5 net4 GND 0.5
+E2 Vn net5 net4 GND -0.5
+Vdm net4 GND dc 0 ac 1
+Vcm net5 GND {vcm}
+XC6 net1 Vout sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC1 net3 GND sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC2 Vp net3 sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC3 Vn net1 sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+x1 Vout IREF VSS VDD net1 net3 OTA
+XM5 net2 net2 net1 net1 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM1 Vout Vout net2 net2 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net6 net6 net3 net3 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2 GND GND net6 net6 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+**** begin user architecture code
+
+.param vdd=5
+.param vcm=2.5
+.param iref = 1m
+
+.control
+	save all
+	save @m.x1.xm1a.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm1a.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm1a.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm1b.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm1b.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm1b.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm2a.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm2a.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm2a.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm2b.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm2b.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm2b.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm3a.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm3a.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm3a.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm3b.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm3b.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm3b.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm4a.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm4a.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm4a.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm4b.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm4b.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm4b.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm4c.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm4c.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm4c.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm4d.msky130_fd_pr_nfet_g5v0d10v5[id] @m.x1.xm4d.msky130_fd_pr_nfet_g5v0d10v5[gm] @m.x1.xm4d.msky130_fd_pr_nfet_g5v0d10v5[gds]
+	save @m.x1.xm5a.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm5a.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm5a.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm5b.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm5b.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm5b.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm6.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm6.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm6.msky130_fd_pr_pfet_g5v0d10v5[gds]
+	save @m.x1.xm7.msky130_fd_pr_pfet_g5v0d10v5[id] @m.x1.xm7.msky130_fd_pr_pfet_g5v0d10v5[gm] @m.x1.xm7.msky130_fd_pr_pfet_g5v0d10v5[gds]
+
+	op
+	show
+
+	ac dec 20 0.1 100e9
+	let vout_mag = abs(v(Vout))
+	print vout_mag
+	let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
+	meas ac A0 find vout_mag at=1k
+	meas ac UGF when vout_mag=1 fall=1
+	meas ac PM find vout_phase_margin when vout_mag=1
+
+	echo $plots
+	write LNA.raw op1.all
+
+.endc
+
+
+
+.lib /usr/local/share/pdk/sky130A/libs.tech/combined/sky130.lib.spice tt
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  /home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym # of pins=6
+** sym_path: /home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym
+** sch_path: /home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sch
+.subckt OTA ovout vdd vss ibias vn vp
+*.iopin ibias
+*.iopin vdd
+*.iopin vss
+*.ipin vp
+*.ipin vn
+*.opin ovout
+XM5a net2 vp net1 vdd sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=80 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM5b net3 vn net1 vdd sky130_fd_pr__pfet_g5v0d10v5 L=0.5 W=80 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4b net2 net2 vss vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4c net3 net3 vss vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4a net5 net2 vss vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4d net7 net3 vss vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM1a net4 net4 vdd vdd sky130_fd_pr__pfet_g5v0d10v5 L=1 W=0.6 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM1b net8 net4 vdd vdd sky130_fd_pr__pfet_g5v0d10v5 L=1 W=0.6 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM7 ibias ibias vdd vdd sky130_fd_pr__pfet_g5v0d10v5 L=2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM6 net1 ibias vdd vdd sky130_fd_pr__pfet_g5v0d10v5 L=2 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM3a net6 net6 net5 vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2a net6 net6 net4 vdd sky130_fd_pr__pfet_g5v0d10v5 L=1 W=0.6 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2b ovout ovout net8 vdd sky130_fd_pr__pfet_g5v0d10v5 L=1 W=0.6 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM3b ovout ovout net7 vss sky130_fd_pr__nfet_g5v0d10v5 L=4 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+.GLOBAL GND
+.end
