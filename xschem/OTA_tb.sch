@@ -5,21 +5,21 @@ K {}
 V {}
 S {}
 E {}
-B 2 240 -1000 1040 -600 {flags=graph
-y1=0.00037
-y2=6.4
+B 2 240 -1010 1040 -610 {flags=graph
+y1=-17
+y2=49
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=-0.99999998
-x2=3.9970979
+x1=-0.99999999
+x2=6.9772949
 divx=5
 subdivx=8
 xlabmag=1.0
 ylabmag=1.0
-node=vout_mag
+node="\\"vout db20()\\""
 color=7
 dataset=-1
 unitx=1
@@ -27,15 +27,15 @@ logx=1
 logy=0
 }
 B 2 240 -550 1040 -150 {flags=graph
-y1=31
+y1=220
 y2=360
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=-0.99999998
-x2=3.9970979
+x1=-1
+x2=6.9772949
 divx=5
 subdivx=8
 xlabmag=1.0
@@ -67,10 +67,6 @@ N 610 -1530 620 -1530 {
 lab=Vn}
 N 610 -1430 620 -1430 {
 lab=Vp}
-N 770 -1610 770 -1590 {
-lab=VDD}
-N 810 -1600 810 -1570 {
-lab=IREF}
 N 290 -1740 290 -1720 {
 lab=VDD}
 N 220 -1740 220 -1720 {
@@ -123,6 +119,10 @@ N 810 -1380 810 -1370 {
 lab=VSS}
 N 1010 -1480 1050 -1480 {
 lab=Vout}
+N 770 -1610 770 -1590 {
+lab=IREF}
+N 810 -1590 810 -1570 {
+lab=VDD}
 C {devices/capa.sym} 1010 -1430 0 0 {name=C5
 m=1
 value=1p
@@ -159,17 +159,15 @@ C {devices/code_shown.sym} 1260 -1810 0 0 {name=s1 only_toplevel=false value=".p
 	op 
 	show
 	
-	ac oct 10 0.1 10e3
+	ac oct 10 0.1 10e6
 	let vout_mag = abs(v(Vout))
-	plot vout_mag
 	let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
-	plot vout_phase_margin
 	meas ac A0 find vout_mag at=1k
 	meas ac UGF when vout_mag=1 fall=1
 	meas ac PM find vout_phase_margin when vout_mag=1
 
 	echo $plots
-	write OTA_tb.raw
+	write OTA_tb.raw 
 
 .endc
 
@@ -190,17 +188,15 @@ C {devices/lab_wire.sym} 420 -1520 0 1 {name=p6 sig_type=std_logic lab=Vn
 }
 C {devices/lab_wire.sym} 390 -1740 0 0 {name=p8 sig_type=std_logic lab=IREF}
 C {devices/lab_wire.sym} 810 -1370 2 0 {name=p10 sig_type=std_logic lab=VSS}
-C {devices/lab_wire.sym} 810 -1600 0 1 {name=p4 sig_type=std_logic lab=IREF}
-C {devices/lab_wire.sym} 770 -1610 0 0 {name=p3 sig_type=std_logic lab=VDD}
+C {devices/lab_wire.sym} 770 -1610 0 0 {name=p4 sig_type=std_logic lab=IREF}
+C {devices/lab_wire.sym} 810 -1590 0 1 {name=p3 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 1050 -1480 0 1 {name=p11 sig_type=std_logic lab=Vout}
-C {devices/ngspice_get_value.sym} 1160 -870 0 0 {name=r1 node="a0"
-descr="A0="}
-C {devices/launcher.sym} 1210 -940 0 0 {name=h1
-descr="Load raw AC"
-tclcommand="xschem raw_read $netlist_dir/OTA_tb.raw; set show_hidden_texts 1; ac; xschem annotate_op"
-}
-C {devices/launcher.sym} 1210 -990 0 0 {name=h2
+C {devices/launcher.sym} 1210 -1000 0 0 {name=h2
 descr="save, netlist & simulate"
 tclcommand="xschem save; xschem netlist; xschem simulate"
 }
 C {/home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym} 640 -1340 0 0 {name=x1}
+C {devices/launcher.sym} 1210 -940 0 0 {name=h5
+descr="load waves" 
+tclcommand="xschem raw_read $netlist_dir/OTA_tb.raw ac"
+}

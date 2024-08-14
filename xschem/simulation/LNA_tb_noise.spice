@@ -1,14 +1,23 @@
-** sch_path: /home/william/projects/sky130_vbl_ip__LNA/xschem/OTA_tb.sch
-**.subckt OTA_tb
-C5 Vout GND 1p m=1
-I0 IREF GND {iref}
+** sch_path: /home/william/projects/sky130_vbl_ip__LNA/xschem/LNA_tb_noise.sch
+**.subckt LNA_tb_noise
 V0 VSS GND 0
 V1 VDD GND {vdd}
-E1 Vp net2 net1 GND 0.5
-E2 Vn net2 net1 GND -0.5
-Vdm net1 GND dc 0 ac 1
-Vcm net2 GND {vcm}
-x1 Vout IREF VSS VDD Vn Vp OTA
+C1 Vonoise GND 1p m=1
+XC6 net1 Vonoise sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC2 net3 GND sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC3 net4 net3 sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XC4 Vin_noise net1 sky130_fd_pr__cap_mim_m3_1 W=1 L=1 MF=1 m=1
+XM5 net2 net2 net1 net1 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM1 Vonoise Vonoise net2 net2 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net5 net5 net3 net3 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2 GND GND net5 net5 sky130_fd_pr__nfet_g5v0d10v5 L=0.5 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+Vinoise Vin_noise net4 dc {vcm} ac 1
+I1 IREF2 GND {iref}
+x1 Vonoise IREF2 VSS VDD net1 net3 OTA
 **** begin user architecture code
 
 .param vdd=5
@@ -35,18 +44,11 @@ x1 Vout IREF VSS VDD Vn Vp OTA
 	op
 	show
 
-	ac oct 10 0.1 10e3
-	let vout_mag = abs(v(Vout))
-	print vout_mag
-	plot vout_mag
-	let vout_phase_margin = phase(v(Vout)) * 180/pi + 180
-	plot vout_phase_margin
-	meas ac A0 find vout_mag at=1k
-	meas ac UGF when vout_mag=1 fall=1
-	meas ac PM find vout_phase_margin when vout_mag=1
+	noise v(Vonoise) Vinoise dec 20 1k 10e3
+	setplot noise1
+	print onoise_total
+	write LNA_tb_noise.raw noise1.all
 
-	echo $plots
-	write OTA_tb.raw
 
 .endc
 
