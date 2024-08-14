@@ -6,24 +6,24 @@ V {}
 S {}
 E {}
 B 2 240 -1000 1040 -600 {flags=graph
-y1=4.7e-08
-y2=5.3e-07
+y1=2.6e-12
+y2=5.2e-07
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=1000
-x2=10000
+x1=2.7521186
+x2=8.945272
 divx=5
-subdivx=4
+subdivx=8
 
 ylabmag=1.0
 
 
 dataset=-1
 unitx=1
-logx=0
+logx=1
 logy=0
 sim_type=ac
 digital=0
@@ -33,14 +33,14 @@ color=4
 node=onoise_spectrum}
 B 2 240 -550 1040 -150 {flags=graph
 y1=0
-y2=1.6e-05
+y2=1.8e-05
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=3
-x2=4
+x1=2.7521186
+x2=8.945272
 divx=5
 subdivx=8
 xlabmag=1.0
@@ -51,7 +51,7 @@ dataset=-1
 unitx=1
 logx=1
 logy=0
-sim_type=ac}
+sim_type=noise}
 N 670 -1740 670 -1720 {
 lab=VDD}
 N 600 -1740 600 -1720 {
@@ -242,7 +242,7 @@ C {devices/code_shown.sym} 1450 -1000 0 0 {name=s1 only_toplevel=false value=".p
 	op 
 	show
 
-	noise v(Vonoise) Vinoise dec 20 1k 10e3
+	noise v(Vonoise) Vinoise dec 20 1k 10e9
 	setplot noise1
 	print onoise_total
 	write LNA_tb_noise.raw noise1.all
@@ -255,7 +255,7 @@ C {sky130_fd_pr/corner.sym} 1620 -1280 0 0 {name=CORNER only_toplevel=false corn
 C {devices/vsource.sym} 670 -1690 0 0 {name=V1 value=\{vdd\} savecurrent=false}
 C {devices/lab_wire.sym} 670 -1740 0 0 {name=p9 sig_type=std_logic lab=VDD}
 C {devices/lab_wire.sym} 600 -1740 0 0 {name=p7 sig_type=std_logic lab=VSS}
-C {devices/launcher.sym} 1150 -940 0 0 {name=h2
+C {devices/launcher.sym} 1150 -960 0 0 {name=h2
 descr="save, netlist & simulate"
 tclcommand="xschem save; xschem netlist; xschem simulate"
 }
