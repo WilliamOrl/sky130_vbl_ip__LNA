@@ -6,24 +6,24 @@ V {}
 S {}
 E {}
 B 2 240 -1000 1040 -600 {flags=graph
-y1=4.7e-08
-y2=5.3e-07
+y1=2.1e-12
+y2=3.3e-07
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
-x1=1000
-x2=10000
+x1=3
+x2=10
 divx=5
-subdivx=4
+subdivx=8
 
 ylabmag=1.0
 
 
 dataset=-1
 unitx=1
-logx=0
+logx=1
 logy=0
 sim_type=ac
 digital=0
@@ -33,14 +33,14 @@ color=4
 node=onoise_spectrum}
 B 2 240 -550 1040 -150 {flags=graph
 y1=0
-y2=1.6e-05
+y2=1.1e-05
 ypos1=0
 ypos2=2
 divy=5
 subdivy=4
 unity=1
 x1=3
-x2=4
+x2=10
 divx=5
 subdivx=8
 xlabmag=1.0
@@ -104,7 +104,7 @@ N 1090 -1480 1170 -1480 {
 lab=#net1}
 C {devices/vsource.sym} 600 -1690 0 0 {name=V0 value=0 savecurrent=false}
 C {devices/gnd.sym} 600 -1620 0 0 {name=l7 lab=GND}
-C {devices/code_shown.sym} 1450 -1000 0 0 {name=s1 only_toplevel=false value=".param vdd=5
+C {devices/code_shown.sym} 1460 -1000 0 0 {name=s1 only_toplevel=false value=".param vdd=5
 .param vcm=2.5
 .param iref = 1u
 
@@ -128,11 +128,12 @@ C {devices/code_shown.sym} 1450 -1000 0 0 {name=s1 only_toplevel=false value=".p
 	op 
 	show
 
-	noise v(Vonoise) Vinoise dec 20 1k 10e3
+	noise v(Vonoise) Vinoise dec 20 1k 10e9
 	setplot noise1
+	write OTA_tb_noise1.raw noise1.all
+	setplot noise2
 	print onoise_total
-	write OTA_tb_noise.raw noise1.all
-
+	write OTA_tb_noise2.raw noise2.all
 
 .endc
 
@@ -162,6 +163,6 @@ C {devices/gnd.sym} 760 -1650 0 0 {name=l9 lab=GND}
 C {devices/lab_wire.sym} 760 -1740 0 0 {name=p13 sig_type=std_logic lab=IREF}
 C {devices/launcher.sym} 1150 -880 0 0 {name=h1
 descr="load Noise" 
-tclcommand="xschem raw_read $netlist_dir/LNA_tb_noise.raw noise"
+tclcommand="xschem raw_read $netlist_dir/OTA_tb_noise1.raw noise"
 }
 C {/home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym} 1110 -1390 0 0 {name=x1}

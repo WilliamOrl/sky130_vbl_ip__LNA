@@ -218,7 +218,7 @@ N 1440 -1640 1440 -1620 {
 lab=IREF}
 C {devices/vsource.sym} 600 -1690 0 0 {name=V0 value=0 savecurrent=false}
 C {devices/gnd.sym} 600 -1620 0 0 {name=l7 lab=GND}
-C {devices/code_shown.sym} 1450 -1000 0 0 {name=s1 only_toplevel=false value=".param vdd=5
+C {devices/code_shown.sym} 1490 -950 0 0 {name=s1 only_toplevel=false value=".param vdd=5
 .param vcm=2.5
 .param iref = 1u
 
@@ -244,8 +244,10 @@ C {devices/code_shown.sym} 1450 -1000 0 0 {name=s1 only_toplevel=false value=".p
 
 	noise v(Vonoise) Vinoise dec 20 1k 10e9
 	setplot noise1
+	write LNA_tb_noise1.raw noise1.all
+	setplot noise2
 	print onoise_total
-	write LNA_tb_noise.raw noise1.all
+	write LNA_tb_noise2.raw noise2.all
 
 
 .endc
@@ -337,6 +339,6 @@ C {devices/gnd.sym} 760 -1650 0 0 {name=l9 lab=GND}
 C {devices/lab_wire.sym} 760 -1740 0 0 {name=p13 sig_type=std_logic lab=IREF}
 C {devices/launcher.sym} 1150 -880 0 0 {name=h1
 descr="load Noise" 
-tclcommand="xschem raw_read $netlist_dir/LNA_tb_noise.raw noise"
+tclcommand="xschem raw_read $netlist_dir/LNA_tb_noise1.raw noise"
 }
 C {/home/william/projects/sky130_vbl_ip__LNA/xschem/OTA.sym} 1310 -1370 0 0 {name=x1}
